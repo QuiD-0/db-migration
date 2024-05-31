@@ -40,5 +40,5 @@ out/
 .kotlin
 
 /infra/postgres-data/
-/infra/redis-data/
 /infra/mysql-data/
+/infra/mongo-data/
