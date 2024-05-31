@@ -1,12 +1,14 @@
 package com.quid.inserter.Pay.repository;
 
 import com.quid.inserter.Pay.domain.Payment;
-import java.util.List;
-import java.util.Optional;
+import com.quid.inserter.Pay.repository.mapper.PaymentMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.jdbc.core.simple.JdbcClient;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
+import java.util.Optional;
 
 @Slf4j
 @Repository
@@ -21,7 +23,7 @@ public class PaymentRepository {
     @Transactional
     public void save(Payment payment) {
         log.info("== SAVE PAYMENT ==");
-        String query = "INSERT INTO Payment (transactionKey, referenceKey, status, amount, currency, regDate, modDate) VALUES (?, ?, ?, ?, ?, ?, ?)";
+        String query = "INSERT INTO Payment (TRANSACTION_KEY, REFERENCE_KEY, STATUS, AMOUNT, CURRENCY, REG_DATE, MOD_DATE) VALUES (?, ?, ?, ?, ?, ?, ?)";
 
         jdbcClient.sql(query)
             .params(List.of(payment.transactionKey(), payment.referenceKey(), payment.status().name(), payment.amount(), payment.currency(), payment.regDate(), payment.modDate()))
@@ -31,17 +33,17 @@ public class PaymentRepository {
     @Transactional(readOnly = true)
     public Optional<Payment> findByTransactionKey(String transactionKey) {
         log.info("== FIND PAYMENT BY TRANSACTION KEY {} ==", transactionKey);
-        return jdbcClient.sql(
-                "SELECT * FROM Payment p WHERE transactionKey = ?")
+        return jdbcClient.sql("SELECT * FROM PAYMENT WHERE TRANSACTION_KEY = ?")
             .param(transactionKey)
-            .query(Payment.class)
-            .optional();
+            .query(PaymentMapper.class)
+            .optional()
+            .map(PaymentMapper::toPayment);
     }
 
     @Transactional
     public void update(Payment done) {
         log.info("== UPDATE PAYMENT ==");
-        String query = "UPDATE Payment SET status = ?, modDate = ? WHERE id = ?";
+        String query = "UPDATE PAYMENT SET STATUS = ?, MOD_DATE = ? WHERE ID = ?";
 
         jdbcClient.sql(query)
             .params(List.of(done.status().name(), done.modDate(), done.id()))

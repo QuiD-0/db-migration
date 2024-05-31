@@ -24,9 +24,17 @@ public class PaymentProcessor {
         log.info("== PROCESS PAYMENT ==");
         Payment payment = repository.findByTransactionKey(paymentEvent.transactionKey)
             .orElseThrow(() -> new IllegalArgumentException("Payment not found"));
-
+        randomDelay();
         Payment done = payment.done();
         repository.update(done);
+    }
+
+    private void randomDelay() {
+        try {
+            Thread.sleep((long) (Math.random() * 5000));
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+        }
     }
 
     public static class PaymentEvent extends ApplicationEvent {

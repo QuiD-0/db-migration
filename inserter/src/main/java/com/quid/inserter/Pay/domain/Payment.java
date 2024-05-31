@@ -2,7 +2,6 @@ package com.quid.inserter.Pay.domain;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
-import lombok.NoArgsConstructor;
 
 public record Payment(
     Long id,
