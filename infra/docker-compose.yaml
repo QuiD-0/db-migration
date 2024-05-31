@@ -2,16 +2,35 @@ version: "3.8"
 
 services:
   mysql:
-    image: mysql:8.0
+    image: mysql:8
     ports:
       - "3306:3306"
     environment:
       MYSQL_USER: user
       MYSQL_PASSWORD: user
-      MYSQL_ROOT_PASSWORD: user
       MYSQL_DATABASE: old_db
     command:
       - --character-set-server=utf8mb4
       - --collation-server=utf8mb4_unicode_ci
     volumes:
       - ./mysql-data:/var/lib/mysql
+  postgres:
+    image: postgres:16
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: user
+      POSTGRES_DB: new_db
+    volumes:
+      - ./postgres-data:/var/lib/postgresql/data
+  mongo:
+    image: mongo:5
+    ports:
+      - "27017:27017"
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: user
+      MONGO_INITDB_ROOT_PASSWORD: user
+      MONGO_INITDB_DATABASE: new_db
+    volumes:
+      - ./mongo-data:/data/db
