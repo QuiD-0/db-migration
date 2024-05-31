@@ -30,7 +30,7 @@ public class PaymentRepository {
 
     @Transactional(readOnly = true)
     public Optional<Payment> findByTransactionKey(String transactionKey) {
-        log.info("== FIND PAYMENT BY TRANSACTION ID {} ==", transactionKey);
+        log.info("== FIND PAYMENT BY TRANSACTION KEY {} ==", transactionKey);
         return jdbcClient.sql(
                 "SELECT * FROM Payment p WHERE transactionKey = ?")
             .param(transactionKey)
