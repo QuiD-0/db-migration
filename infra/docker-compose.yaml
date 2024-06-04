@@ -25,13 +25,22 @@ services:
       POSTGRES_DB: new_db
     volumes:
       - ./postgres-data:/var/lib/postgresql/data
-  mongo:
-    image: mongo:5
+  zookeeper:
+    platform: linux/amd64
+    container_name: zookeeper
+    image: wurstmeister/zookeeper
     ports:
-      - "27017:27017"
+      - "2181:2181"
+  kafka:
+    container_name: kafka
+    image: wurstmeister/kafka
+    depends_on:
+      - zookeeper
+    ports:
+      - "9092:9092"
     environment:
-      MONGO_INITDB_ROOT_USERNAME: user
-      MONGO_INITDB_ROOT_PASSWORD: user
-      MONGO_INITDB_DATABASE: new_db
+      KAFKA_ADVERTISED_HOST_NAME: 127.0.0.1
+      KAFKA_ADVERTISED_PORT: 9092
+      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
     volumes:
-      - ./mongo-data:/data/db
+      - /var/run/docker.sock:/var/run/docker.sock
