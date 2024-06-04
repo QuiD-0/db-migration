@@ -43,10 +43,10 @@ public class PaymentRepository {
     @Transactional
     public void update(Payment done) {
         log.info("== UPDATE PAYMENT ==");
-        String query = "UPDATE PAYMENT SET STATUS = ?, MOD_DATE = ? WHERE ID = ?";
+        String query = "UPDATE PAYMENT SET STATUS = ?, MOD_DATE = ?, RESPONSE_JSON = ? WHERE ID = ?";
 
         jdbcClient.sql(query)
-            .params(List.of(done.status().name(), done.modDate(), done.id()))
+            .params(List.of(done.status().name(), done.modDate(), done.toResponse(), done.id()))
             .update();
     }
 }
