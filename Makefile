@@ -5,7 +5,12 @@ DOCKER_COMPOSE = cd infra && docker-compose
 .PHONY: start
 start: erase build up ## clean current environment, recreate dependencies and spin up again
 
-.PHONY: erase
+.PHONY: restart
+restart: ## stop and start environment
+		$(DOCKER_COMPOSE) stop
+		$(DOCKER_COMPOSE) up -d
+
+.PHONY: clean
 erase: ## stop and delete containers, clean volumes
 		$(DOCKER_COMPOSE) stop
 		$(DOCKER_COMPOSE) rm -v -f
