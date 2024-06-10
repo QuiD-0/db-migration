@@ -23,8 +23,6 @@ RESPONSE_JSON text
 
 # 카프카 커넥터 생성
 
-docker exec -it kafka bash
-
 curl -i -X POST -H "Accept:application/json" -H "Content-Type:application/json" localhost:8083/connectors/ \
 -d '{
 "name": "source-connector",

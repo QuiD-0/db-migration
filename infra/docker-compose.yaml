@@ -39,7 +39,6 @@ services:
 
   kafka1:
     image: wurstmeister/kafka:latest
-    restart: "no"
     links:
       - zookeeper
     ports:
@@ -54,7 +53,6 @@ services:
 
   kafka2:
     image: wurstmeister/kafka:latest
-    restart: "no"
     links:
       - zookeeper
     ports:
@@ -84,3 +82,20 @@ services:
       - kafka2
       - zookeeper
       - mysql
+
+  kafka-ui:
+    image: provectuslabs/kafka-ui:latest
+    ports:
+      - "8000:8080"
+    environment:
+      KAFKA_CLUSTERS_0_NAME: local
+      KAFKA_CLUSTERS_0_BOOTSTRAPSERVERS: kafka1:29092,kafka2:29093
+      KAFKA_CLUSTERS_0_ZOOKEEPER: zookeeper:2181
+    links:
+      - zookeeper
+      - kafka1
+      - kafka2
+    depends_on:
+      - kafka1
+      - kafka2
+      - zookeeper
