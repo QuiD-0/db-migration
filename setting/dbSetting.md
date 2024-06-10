@@ -36,6 +36,8 @@ curl -i -X POST -H "Accept:application/json" -H "Content-Type:application/json" 
 "database.dbname": "old_db",
 "database.server.name": "dbserver",
 "table.include.list": "old_db.PAYMENT",
-"topic.prefix": "dbserver"
+"topic.prefix": "dbserver",
+"database.history.kafka.bootstrap.servers": "kafka1:9092,kafka2:9093",  
+"database.history.kafka.topic": "old_db.payment"
 }
 }'
