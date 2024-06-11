@@ -24,19 +24,32 @@ RESPONSE_JSON text
 # 카프카 커넥터 생성
 
 curl -i -X POST -H "Accept:application/json" -H "Content-Type:application/json" localhost:8083/connectors/ -d '{
-"name": "source-connector2",
+"name": "source-connector",
 "config": {
 "connector.class": "io.debezium.connector.mysql.MySqlConnector",
+"tasks.max": 1,
 "database.hostname": "mysql",
-"database.port": "3306",
-"database.user": "user",
-"database.password": "user",
+"database.port": 3306,
+"database.user": "local",
+"database.password": "local",
+"database.dbname" : "mysql",
 "database.server.id": "184054",
-"database.dbname": "old_db",
-"database.server.name": "dbserver",
-"table.include.list": "old_db.payment",
-"topic.prefix": "dbserver",
+"topic.prefix": "dbserver1",
+"schema.include.list": "old_db",
+"topic.creation.default.replication.factor": 1,
+"topic.creation.default.partitions": 5,
+"topic.creation.default.cleanup.policy": "compact",
+"topic.creation.default.compression.type": "gzip",
+"topic.creation.default.delete.retention.ms" : 2592000000,
+"topic.creation.groups": "productlog",
+"topic.creation.productlog.include": "dbserver1\\.old_db\\.payment",
+"topic.creation.productlog.replication.factor": 1,
+"topic.creation.productlog.partitions": 10,
+"topic.creation.productlog.cleanup.policy": "delete",
+"topic.creation.productlog.compression.type": "producer",
+"topic.creation.productlog.retention.ms": 7776000000,
 "schema.history.internal.kafka.bootstrap.servers": "kafka1:29092,kafka2:29093",
-"schema.history.internal.kafka.topic": "dbhistory.schema",
+"schema.history.internal.kafka.topic": "dbhistory.schema"
 }
 }'
+
