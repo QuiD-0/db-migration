@@ -24,7 +24,7 @@ RESPONSE_JSON text
 # 카프카 커넥터 생성
 
 curl -i -X POST -H "Accept:application/json" -H "Content-Type:application/json" localhost:8083/connectors/ -d '{
-"name": "source-connector",
+"name": "source-connector2",
 "config": {
 "connector.class": "io.debezium.connector.mysql.MySqlConnector",
 "database.hostname": "mysql",
@@ -34,7 +34,9 @@ curl -i -X POST -H "Accept:application/json" -H "Content-Type:application/json" 
 "database.server.id": "184054",
 "database.dbname": "old_db",
 "database.server.name": "dbserver",
-"table.include.list": "old_db.PAYMENT",
-"topic.prefix": "dbserver"
+"table.include.list": "old_db.payment",
+"topic.prefix": "dbserver",
+"schema.history.internal.kafka.bootstrap.servers": "kafka1:29092,kafka2:29093",
+"schema.history.internal.kafka.topic": "dbhistory.schema",
 }
 }'
