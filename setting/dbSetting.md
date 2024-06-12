@@ -2,7 +2,7 @@
 
 show variables like 'log_bin';
 
-# binlog 가 row_level로 설정되어 있는지 확인
+# binlog 가 ROW 로 설정되어 있는지 확인
 
 show variables like 'binlog_format';
 
@@ -34,14 +34,18 @@ curl -i -X POST -H "Accept:application/json" -H "Content-Type:application/json" 
 "database.password": "root",
 "database.dbname" : "mysql",
 "database.server.id": "970628",
-"topic.prefix": "mysql",
-"schema.history.internal.kafka.bootstrap.servers": "kafka1:29092,kafka2:29093",
-"schema.history.internal.kafka.topic": "mysql.schema",
+"database.include.list": "old_db",
+"database.server.name": "mysql",
 "database.history.kafka.bootstrap.servers": "kafka1:29092,kafka2:29093",
 "database.history.kafka.topic": "mysql.database.history",
-"database.server.name": "mysql",
-"database.include.list": "old_db",
-"table.include.list": "old_db.PAYMENT"
+"topic.prefix": "mysql",
+"table.include.list": "old_db.PAYMENT",
+"schema.history.internal.kafka.bootstrap.servers": "kafka1:29092,kafka2:29093",
+"schema.history.internal.kafka.topic": "mysql.schema",
+"key.converter": "org.apache.kafka.connect.json.JsonConverter",
+"value.converter": "org.apache.kafka.connect.json.JsonConverter",
+"decimal.handling.mode":"double",
+"snapshot.lock.mode":"none"
 }
 }'
 
