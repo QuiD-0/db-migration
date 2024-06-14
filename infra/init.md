@@ -48,7 +48,10 @@ curl -i -X POST -H "Accept:application/json" -H "Content-Type:application/json" 
     "key.converter": "org.apache.kafka.connect.json.JsonConverter",
     "value.converter": "org.apache.kafka.connect.json.JsonConverter",
     "decimal.handling.mode":"double",
-    "snapshot.lock.mode":"none"
+    "snapshot.lock.mode":"none",
+    "transforms": "unwrap",
+    "transforms.unwrap.type": "io.debezium.transforms.ExtractNewRecordState",
+    "transforms.unwrap.drop.tombstones": "false"
   }
 }'
 ```
