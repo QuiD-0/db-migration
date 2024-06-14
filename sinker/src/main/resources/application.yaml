@@ -7,6 +7,19 @@ spring:
     username: local
     password: local
     driver-class-name: org.postgresql.Driver
+  kafka:
+    consumer:
+      bootstrap-servers: localhost:9092, localhost:9093
+      group-id: migration
+      auto-offset-reset: earliest
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      properties:
+        spring.json.trusted.packages: '*'
+      enable-auto-commit: false
+
+    listener:
+      ack-mode: manual_immediate
 
 server:
   port: 8081
