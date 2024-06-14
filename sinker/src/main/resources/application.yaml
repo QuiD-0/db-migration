@@ -1,0 +1,12 @@
+spring:
+  application:
+    name: sinker
+
+  datasource:
+    url: jdbc:postgresql://localhost:5432/new_db
+    username: local
+    password: local
+    driver-class-name: org.postgresql.Driver
+
+server:
+  port: 8081
