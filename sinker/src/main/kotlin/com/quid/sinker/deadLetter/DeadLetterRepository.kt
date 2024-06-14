@@ -3,7 +3,7 @@ package com.quid.sinker.deadLetter
 import org.springframework.stereotype.Component
 
 @Component
-class DeadLetterQueue {
+class DeadLetterRepository {
     fun save(message: String) {
         println("Dead letter: $message")
     }
