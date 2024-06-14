@@ -1,9 +1,9 @@
-package com.quid.inserter.Pay.usecase;
+package com.quid.inserter.pay.usecase;
 
-import com.quid.inserter.Pay.domain.Payment;
-import com.quid.inserter.Pay.domain.TransactionKey;
-import com.quid.inserter.Pay.listener.PaymentProcessor.PaymentEvent;
-import com.quid.inserter.Pay.repository.PaymentRepository;
+import com.quid.inserter.pay.domain.Payment;
+import com.quid.inserter.pay.domain.TransactionKey;
+import com.quid.inserter.pay.listener.PaymentProcessor.PaymentEvent;
+import com.quid.inserter.pay.repository.PaymentRepository;
 import java.math.BigDecimal;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.ApplicationEventPublisher;

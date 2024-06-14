@@ -1,7 +1,7 @@
-package com.quid.inserter.Pay.repository.mapper;
+package com.quid.inserter.pay.repository.mapper;
 
-import com.quid.inserter.Pay.domain.Payment;
-import com.quid.inserter.Pay.domain.PaymentStatus;
+import com.quid.inserter.pay.domain.Payment;
+import com.quid.inserter.pay.domain.PaymentStatus;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;

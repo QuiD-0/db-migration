@@ -1,4 +1,4 @@
-package com.quid.inserter.Pay.config;
+package com.quid.inserter.pay.config;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.scheduling.annotation.EnableScheduling;

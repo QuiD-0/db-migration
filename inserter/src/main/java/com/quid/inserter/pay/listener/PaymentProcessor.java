@@ -1,7 +1,7 @@
-package com.quid.inserter.Pay.listener;
+package com.quid.inserter.pay.listener;
 
-import com.quid.inserter.Pay.domain.Payment;
-import com.quid.inserter.Pay.repository.PaymentRepository;
+import com.quid.inserter.pay.domain.Payment;
+import com.quid.inserter.pay.repository.PaymentRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.ApplicationEvent;
 import org.springframework.context.event.EventListener;

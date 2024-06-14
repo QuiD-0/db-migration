@@ -1,6 +1,6 @@
-package com.quid.inserter.Pay;
+package com.quid.inserter.pay;
 
-import com.quid.inserter.Pay.usecase.PlaceOrder;
+import com.quid.inserter.pay.usecase.PlaceOrder;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 

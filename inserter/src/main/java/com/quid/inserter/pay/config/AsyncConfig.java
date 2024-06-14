@@ -1,4 +1,4 @@
-package com.quid.inserter.Pay.config;
+package com.quid.inserter.pay.config;
 
 import org.springframework.boot.task.ThreadPoolTaskExecutorBuilder;
 import org.springframework.context.annotation.Bean;

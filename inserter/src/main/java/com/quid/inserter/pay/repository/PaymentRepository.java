@@ -1,7 +1,7 @@
-package com.quid.inserter.Pay.repository;
+package com.quid.inserter.pay.repository;
 
-import com.quid.inserter.Pay.domain.Payment;
-import com.quid.inserter.Pay.repository.mapper.PaymentMapper;
+import com.quid.inserter.pay.domain.Payment;
+import com.quid.inserter.pay.repository.mapper.PaymentMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.jdbc.core.simple.JdbcClient;
 import org.springframework.stereotype.Repository;

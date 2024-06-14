@@ -1,4 +1,4 @@
-package com.quid.inserter.Pay.domain;
+package com.quid.inserter.pay.domain;
 
 public enum PaymentStatus {
     PENDING,

@@ -1,4 +1,4 @@
-package com.quid.inserter.Pay.domain;
+package com.quid.inserter.pay.domain;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
