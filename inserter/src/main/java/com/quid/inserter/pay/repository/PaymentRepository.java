@@ -41,7 +41,7 @@ public class PaymentRepository {
     }
 
     @Transactional
-    public void update(Payment done) {
+    public void done(Payment done) {
         log.info("== UPDATE PAYMENT ==");
         String query = "UPDATE PAYMENT SET STATUS = ?, MOD_DATE = ?, RESPONSE_JSON = ? WHERE ID = ?";
 

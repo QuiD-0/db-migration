@@ -26,7 +26,7 @@ public class PaymentProcessor {
             .orElseThrow(() -> new IllegalArgumentException("Payment not found"));
         randomDelay();
         Payment done = payment.done();
-        repository.update(done);
+        repository.done(done);
     }
 
     private void randomDelay() {
