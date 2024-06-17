@@ -1,7 +1,7 @@
 package com.quid.sinker.pay.gateway.consumer
 
 import com.quid.sinker.deadLetter.DeadLetterRepository
-import com.quid.sinker.pay.usecase.PayTransformer
+import com.quid.sinker.pay.usecase.PaymentProcessor
 import org.springframework.kafka.annotation.DltHandler
 import org.springframework.kafka.annotation.KafkaListener
 import org.springframework.kafka.annotation.RetryableTopic
@@ -11,7 +11,7 @@ import org.springframework.stereotype.Component
 
 @Component
 class KafkaPayConsumer(
-    private val transformer: PayTransformer,
+    private val processor: PaymentProcessor,
     private val deadLetterRepository: DeadLetterRepository
 ) {
 
@@ -21,7 +21,7 @@ class KafkaPayConsumer(
     )
     @KafkaListener(topics = ["mysql.old_db.PAYMENT"])
     fun consume(message: String, ack: Acknowledgment) {
-        transformer.divideResponse(message)
+        processor.divideAndSave(message)
         ack.acknowledge()
     }
 
