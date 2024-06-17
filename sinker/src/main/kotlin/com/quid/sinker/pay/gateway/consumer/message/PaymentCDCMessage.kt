@@ -1,14 +1,38 @@
 package com.quid.sinker.pay.gateway.consumer.message
 
 import com.fasterxml.jackson.annotation.JsonProperty
+import com.fasterxml.jackson.databind.ObjectMapper
+import com.quid.sinker.pay.domain.Payment
+import com.quid.sinker.pay.domain.PaymentResponse
 import com.quid.sinker.pay.domain.PaymentStatus
 import java.math.BigDecimal
+import java.time.LocalDateTime
+import java.time.ZoneOffset
+import java.time.format.DateTimeFormatter
 
 data class PaymentCDCMessage(
     val schema: Schema,
     val payload: Payload
 ) {
 
+    val payment: Payment
+        get() = Payment(
+            id = payload.id,
+            transactionKey = payload.transactionKey,
+            referenceKey = payload.referenceKey,
+            status = payload.status,
+            amount = payload.amount,
+            currency = payload.currency,
+            regDate = LocalDateTime.ofEpochSecond(payload.regDate, 0, ZoneOffset.UTC),
+            modDate = LocalDateTime.ofEpochSecond(payload.modDate, 0, ZoneOffset.UTC)
+        )
+
+    val paymentResponse: PaymentResponse?
+        get() = payload.responseJson?.let {
+            ObjectMapper()
+                .readValue(it, PaymentResponseMessage::class.java)
+                .toDomain()
+        }
 }
 
 data class Schema(
@@ -32,7 +56,7 @@ data class Field(
 
 data class Payload(
     @JsonProperty("ID")
-    val id: String,
+    val id: Long,
     @JsonProperty("TRANSACTION_KEY")
     val transactionKey: String,
     @JsonProperty("REFERENCE_KEY")
@@ -51,4 +75,23 @@ data class Payload(
     val responseJson: String?
 ) {
 
+}
+
+data class PaymentResponseMessage(
+    @JsonProperty("referenceKey")
+    val referenceKey: String,
+    @JsonProperty("transactionKey")
+    val transactionKey: String,
+    @JsonProperty("status")
+    val status: PaymentStatus,
+    @JsonProperty("payDate")
+    val payDate: String
+) {
+    fun toDomain(): PaymentResponse =
+        PaymentResponse(
+            transactionKey = transactionKey,
+            referenceKey = referenceKey,
+            status = status,
+            payDate = LocalDateTime.parse(payDate, DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSSSSS"))
+        )
 }

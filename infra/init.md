@@ -34,6 +34,31 @@ create table DEAD_LETTER
     MESSAGE         text
 );
 
+create table PAYMENT
+(
+    ID             BIGSERIAL
+        constraint PAYMENT_pk
+            primary key,
+    TRANSACTION_KEY varchar(255)   not null,
+    REFERENCE_KEY   varchar(255)   not null,
+    STATUS          varchar(255)   not null,
+    AMOUNT          decimal(19, 2) not null,
+    CURRENCY        varchar(255)   not null,
+    REG_DATE        timestamp      not null,
+    MOD_DATE        timestamp      not null
+);
+
+create table PAYMENT_RESPONSE
+(
+    ID             BIGSERIAL
+        constraint PAYMENT_RESPONSE_pk
+            primary key,
+    TRANSACTION_KEY varchar(255)   not null,
+    REFERENCE_KEY   varchar(255)   not null,
+    STATUS          varchar(255)   not null,
+    PAY_DATE        timestamp      not null
+);
+
 
 ```
 
