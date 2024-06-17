@@ -6,7 +6,7 @@ show variables like 'log_bin';
 
 show variables like 'binlog_format';
 
-# 소스 테이블
+# 소스 테이블 (mysql)
 
 ```sql
 create table PAYMENT
@@ -21,6 +21,20 @@ REG_DATE datetime not null,
 MOD_DATE datetime not null,
 RESPONSE_JSON text
 );
+```
+
+# 싱크 테이블 (postgres)
+
+```sql
+create table DEAD_LETTER
+(
+    DEAD_LETTER_SEQ BIGSERIAL
+        constraint DEAD_LETTER_pk
+            primary key,
+    MESSAGE         text
+);
+
+
 ```
 
 # 카프카 커넥터 생성
