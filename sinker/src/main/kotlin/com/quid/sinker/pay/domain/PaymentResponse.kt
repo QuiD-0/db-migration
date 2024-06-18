@@ -1,6 +1,5 @@
 package com.quid.sinker.pay.domain
 
-import org.springframework.format.annotation.DateTimeFormat
 import java.time.LocalDateTime
 
 data class PaymentResponse(

@@ -19,6 +19,6 @@ class DeadLetterRepository(
 
         jdbcClient.sql(sql)
             .param("message", message)
-            .query()
+            .update()
     }
 }

@@ -15,25 +15,20 @@ class PaymentResponseRepository(
         paymentResponse
             ?.let {
                 val query = """
-                    INSERT INTO payment_response (id, transaction_key, reference_key, status, pay_date)
-                    VALUES (:id, :transaction_key, :reference_key, :status, :pay_date) 
-                    ON CONFLICT (id) DO UPDATE SET 
-                    reference_key = EXCLUDED.reference_key,
-                    status = EXCLUDED.status,
-                    pay_date = EXCLUDED.pay_date
+                    INSERT INTO payment_response (transaction_key, reference_key, status, pay_date)
+                    VALUES (:transaction_key, :reference_key, :status, :pay_date) 
                 """.trimIndent()
 
             jdbcClient.sql(query)
                 .params(
                     mapOf(
-                        "id" to it.id,
                         "transaction_key" to it.transactionKey,
                         "reference_key" to it.referenceKey,
                         "status" to it.status.name,
                         "pay_date" to it.payDate
                     )
                 )
-                .query()
+                .update()
             }
     }
 

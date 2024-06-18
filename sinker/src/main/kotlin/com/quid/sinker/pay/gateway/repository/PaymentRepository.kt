@@ -37,6 +37,6 @@ class PaymentRepository(
                     "reg_date" to payment.regDate,
                     "mod_date" to payment.modDate
                 )
-            ).query()
+            ).update()
     }
 }
