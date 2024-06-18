@@ -6,6 +6,7 @@ import com.quid.sinker.pay.domain.Payment
 import com.quid.sinker.pay.domain.PaymentResponse
 import com.quid.sinker.pay.domain.PaymentStatus
 import java.math.BigDecimal
+import java.time.Instant
 import java.time.LocalDateTime
 import java.time.ZoneOffset
 import java.time.format.DateTimeFormatter
@@ -23,8 +24,8 @@ data class PaymentCDCMessage(
             status = payload.status,
             amount = payload.amount,
             currency = payload.currency,
-            regDate = LocalDateTime.ofEpochSecond(payload.regDate, 0, ZoneOffset.UTC),
-            modDate = LocalDateTime.ofEpochSecond(payload.modDate, 0, ZoneOffset.UTC)
+            regDate = Instant.ofEpochMilli(payload.regDate).atZone(ZoneOffset.UTC).toLocalDateTime(),
+            modDate = Instant.ofEpochMilli(payload.modDate).atZone(ZoneOffset.UTC).toLocalDateTime()
         )
 
     val paymentResponse: PaymentResponse?
@@ -92,6 +93,6 @@ data class PaymentResponseMessage(
             transactionKey = transactionKey,
             referenceKey = referenceKey,
             status = status,
-            payDate = LocalDateTime.parse(payDate, DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSSSSS"))
+            payDate = LocalDateTime.parse(payDate)
         )
 }
