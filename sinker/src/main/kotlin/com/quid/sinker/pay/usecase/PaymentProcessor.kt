@@ -18,6 +18,5 @@ class PaymentProcessor(
         val cdcMessage = objectMapper.readValue(message, PaymentCDCMessage::class.java)
         log.info("Processing payment: ${cdcMessage.payment}")
         paymentCDCRepository.persist(cdcMessage.payment, cdcMessage.paymentResponse)
-        sleep(2_000)
     }
 }
