@@ -1,12 +1,16 @@
-# binlog가 활성화 되어 있는지 확인
+# 사전준비
+
+## binlog가 활성화 되어 있는지 확인
 
 show variables like 'log_bin';
 
-# binlog 가 ROW 로 설정되어 있는지 확인
+## binlog 가 ROW 로 설정되어 있는지 확인
 
 show variables like 'binlog_format';
 
-# 소스 테이블 (mysql)
+# 두 DB의 스키마가 다를경우 어플리케이션에서 처리하는 방법
+
+## 소스 테이블 (mysql)
 
 ```sql
 create table PAYMENT
@@ -23,7 +27,7 @@ RESPONSE_JSON text
 );
 ```
 
-# 싱크 테이블 (postgres)
+## 싱크 테이블 (postgres)
 
 ```sql
 create table DEAD_LETTER
@@ -62,7 +66,7 @@ create table PAYMENT_RESPONSE
 
 ```
 
-# 카프카 커넥터 생성
+## 카프카 커넥터 생성
 
 ```bash
 curl -i -X POST -H "Accept:application/json" -H "Content-Type:application/json" localhost:8083/connectors/ -d '{
@@ -95,3 +99,4 @@ curl -i -X POST -H "Accept:application/json" -H "Content-Type:application/json" 
 }'
 ```
 
+# 두 DB의 스키마가 같은경우 sink-connector를 사용해서 처리하는 방법 
