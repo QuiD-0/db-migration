@@ -20,7 +20,7 @@ public class MemberSaveRepository {
     public void save() {
 
         Member member = new Member("test", "test", "test");
-        String sql = "INSERT INTO member (member_id, password, name, level, reg_date, mod_date) VALUES (?, ?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO MEMBER (MEMBER_ID, PASSWORD, NAME, LEVEL, REG_DATE, MOD_DATE) VALUES (?, ?, ?, ?, ?, ?)";
 
         log.info("===== MemberSaveRepository.save =====");
         jdbcClient.sql(sql)

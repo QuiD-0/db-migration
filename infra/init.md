@@ -70,7 +70,7 @@ create table PAYMENT_RESPONSE
 
 ```bash
 curl -i -X POST -H "Accept:application/json" -H "Content-Type:application/json" localhost:8083/connectors/ -d '{
-  "name": "source-connector",
+  "name": "pay-source-connector",
   "config": {
     "connector.class": "io.debezium.connector.mysql.MySqlConnector",
     "tasks.max": 1,
@@ -105,15 +105,15 @@ curl -i -X POST -H "Accept:application/json" -H "Content-Type:application/json" 
 ## 소스 테이블 (mysql)
 
 ```sql
-create table member (
-    member_seq bigint not null auto_increment,
-    member_id varchar(255) not null,
-    password varchar(255) not null,
-    name varchar(255) not null,
-    level varchar(255) not null,
-    reg_date datetime not null,
-    mod_date datetime not null,
-    primary key (member_seq)
+create table MEMBER (
+    MEMBER_SEQ bigint not null auto_increment,
+    MEMBER_ID varchar(255) not null,
+    PASSWORD varchar(255) not null,
+    NAME varchar(255) not null,
+    LEVEL varchar(255) not null,
+    REG_DATE datetime not null,
+    MOD_DATE datetime not null,
+    primary key (MEMBER_SEQ)
 );
 ```
 
@@ -131,4 +131,36 @@ create table member_replica (
     reg_date   timestamp      not null,
     mod_date   timestamp      not null
 );
+```
+
+## 카프카 커넥터 생성
+
+위에서 사용한 커넥터에 대한 설정을 변경하여 사용한다.
+
+```bash
+curl -i -X PUT -H "Accept:application/json" -H "Content-Type:application/json" localhost:8083/connectors/source-connectors/config -d '{
+  "connector.class": "io.debezium.connector.mysql.MySqlConnector",
+  "tasks.max": 1,
+  "database.hostname": "mysql",
+  "database.port": 3306,
+  "database.user": "root",
+  "database.password": "root",
+  "database.dbname": "mysql",
+  "database.server.id": "970628",
+  "database.include.list": "old_db",
+  "database.server.name": "mysql",
+  "database.history.kafka.bootstrap.servers": "kafka1:29092,kafka2:29093",
+  "database.history.kafka.topic": "mysql.database.history",
+  "topic.prefix": "mysql",
+  "table.include.list": "old_db.PAYMENT, old_db.MEMBER",
+  "schema.history.internal.kafka.bootstrap.servers": "kafka1:29092,kafka2:29093",
+  "schema.history.internal.kafka.topic": "mysql.schema",
+  "key.converter": "org.apache.kafka.connect.json.JsonConverter",
+  "value.converter": "org.apache.kafka.connect.json.JsonConverter",
+  "decimal.handling.mode": "double",
+  "snapshot.lock.mode": "none",
+  "transforms": "unwrap",
+  "transforms.unwrap.type": "io.debezium.transforms.ExtractNewRecordState",
+  "transforms.unwrap.drop.tombstones": "false"
+}'
 ```
