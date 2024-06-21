@@ -100,3 +100,35 @@ curl -i -X POST -H "Accept:application/json" -H "Content-Type:application/json" 
 ```
 
 # 두 DB의 스키마가 같은경우 sink-connector를 사용해서 처리하는 방법 
+
+
+## 소스 테이블 (mysql)
+
+```sql
+create table member (
+    member_seq bigint not null auto_increment,
+    member_id varchar(255) not null,
+    password varchar(255) not null,
+    name varchar(255) not null,
+    level varchar(255) not null,
+    reg_date datetime not null,
+    mod_date datetime not null,
+    primary key (member_seq)
+);
+```
+
+## 싱크 테이블 (postgres)
+
+```sql
+create table member_replica (
+    member_seq BIGSERIAL
+        constraint member_pk
+            primary key,
+    member_id  varchar(255)   not null,
+    password   varchar(255)   not null,
+    name       varchar(255)   not null,
+    level      varchar(255)   not null,
+    reg_date   timestamp      not null,
+    mod_date   timestamp      not null
+);
+```
