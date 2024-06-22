@@ -6,7 +6,6 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
 @Component
-@Profile("pay")
 public class PayExecutor {
 
     private final PlaceOrder placeOrder;

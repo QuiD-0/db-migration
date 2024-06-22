@@ -158,7 +158,7 @@ curl -i -X POST -H "Accept:application/json" -H "Content-Type:application/json" 
   "name": "sink-connector",
   "config": {
     "connector.class": "io.debezium.connector.jdbc.JdbcSinkConnector",
-    "connection.url": "jdbc:postgresql://postgres/new_db",
+    "connection.url": "jdbc:postgresql://postgres:5432/new_db",
     "connection.username": "local",
     "connection.password": "local",
     "topics" : "mysql.old_db.MEMBER",

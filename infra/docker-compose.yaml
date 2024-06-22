@@ -16,6 +16,9 @@ services:
       - --collation-server=utf8mb4_unicode_ci
     volumes:
       - ./mysql-data:/var/lib/mysql
+    networks:
+      - cdd-network
+
   postgres:
     image: postgres:latest
     container_name: postgres
@@ -27,6 +30,8 @@ services:
       - "5432:5432"
     volumes:
       - ./postgres-data:/var/lib/postgresql/data
+    networks:
+      - cdd-network
 
   zookeeper:
     image: wurstmeister/zookeeper:latest
@@ -38,6 +43,8 @@ services:
       - "2181:2181"
       - "2888:2888"
       - "3888:3888"
+    networks:
+      - cdd-network
 
   kafka1:
     image: wurstmeister/kafka:latest
@@ -55,6 +62,8 @@ services:
       KAFKA_ADVERTISED_LISTENERS: INTERNAL://kafka1:29092,EXTERNAL://localhost:9092
       KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: INTERNAL:PLAINTEXT,EXTERNAL:PLAINTEXT
       KAFKA_INTER_BROKER_LISTENER_NAME: INTERNAL
+    networks:
+      - cdd-network
 
   kafka2:
     image: wurstmeister/kafka:latest
@@ -72,6 +81,8 @@ services:
       KAFKA_ADVERTISED_LISTENERS: INTERNAL://kafka2:29093,EXTERNAL://localhost:9093
       KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: INTERNAL:PLAINTEXT,EXTERNAL:PLAINTEXT
       KAFKA_INTER_BROKER_LISTENER_NAME: INTERNAL
+    networks:
+      - cdd-network
 
   kafka-connect:
     image: debezium/connect:2.6.0.Final
@@ -83,14 +94,13 @@ services:
       OFFSET_STORAGE_TOPIC: my_connect_offsets
       STATUS_STORAGE_TOPIC: my_connect_statuses
       BOOTSTRAP_SERVERS: kafka1:29092,kafka2:29093
-    links:
-      - zookeeper
-      - mysql
     depends_on:
       - kafka1
       - kafka2
       - zookeeper
       - mysql
+    networks:
+      - cdd-network
 
   kafka-ui:
     image: provectuslabs/kafka-ui:latest
@@ -101,11 +111,13 @@ services:
       KAFKA_CLUSTERS_0_NAME: local
       KAFKA_CLUSTERS_0_BOOTSTRAP_SERVERS: kafka1:29092,kafka2:29093
       KAFKA_CLUSTERS_0_ZOOKEEPER: zookeeper:2181
-    links:
-      - zookeeper
-      - kafka1
-      - kafka2
     depends_on:
       - kafka1
       - kafka2
       - zookeeper
+    networks:
+      - cdd-network
+
+networks:
+  cdd-network:
+    driver: bridge

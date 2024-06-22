@@ -6,7 +6,6 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
 @Component
-@Profile("member")
 public class MemberSaveScheduler {
 
     private final MemberSaveRepository member;
