@@ -70,7 +70,7 @@ create table PAYMENT_RESPONSE
 
 ```bash
 curl -i -X POST -H "Accept:application/json" -H "Content-Type:application/json" localhost:8083/connectors/ -d '{
-  "name": "pay-source-connector",
+  "name": "source-connector",
   "config": {
     "connector.class": "io.debezium.connector.mysql.MySqlConnector",
     "tasks.max": 1,
@@ -124,7 +124,7 @@ create table MEMBER (
 ## source-connector 설정 변경
 
 ```bash
-curl -i -X PUT -H "Accept:application/json" -H "Content-Type:application/json" localhost:8083/connectors/source-connectors/config -d '{
+curl -i -X PUT -H "Accept:application/json" -H "Content-Type:application/json" localhost:8083/connectors/source-connector/config -d '{
   "connector.class": "io.debezium.connector.mysql.MySqlConnector",
   "tasks.max": 1,
   "database.hostname": "mysql",
