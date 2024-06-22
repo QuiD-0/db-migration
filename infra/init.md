@@ -119,23 +119,9 @@ create table MEMBER (
 
 ## 싱크 테이블 (postgres)
 
-```sql
-create table member_replica (
-    member_seq BIGSERIAL
-        constraint member_pk
-            primary key,
-    member_id  varchar(255)   not null,
-    password   varchar(255)   not null,
-    name       varchar(255)   not null,
-    level      varchar(255)   not null,
-    reg_date   timestamp      not null,
-    mod_date   timestamp      not null
-);
-```
+-> 자동 생성됨
 
-## 카프카 커넥터 생성
-
-위에서 사용한 커넥터에 대한 설정을 변경하여 사용한다.
+## source-connector 설정 변경
 
 ```bash
 curl -i -X PUT -H "Accept:application/json" -H "Content-Type:application/json" localhost:8083/connectors/source-connectors/config -d '{
@@ -162,5 +148,28 @@ curl -i -X PUT -H "Accept:application/json" -H "Content-Type:application/json" l
   "transforms": "unwrap",
   "transforms.unwrap.type": "io.debezium.transforms.ExtractNewRecordState",
   "transforms.unwrap.drop.tombstones": "false"
+}'
+```
+
+## sink-connector 생성
+
+```bash
+curl -i -X POST -H "Accept:application/json" -H "Content-Type:application/json" localhost:8083/connectors/ -d '{
+  "name": "sink-connector",
+  "config": {
+    "connector.class": "io.debezium.connector.jdbc.JdbcSinkConnector",
+    "connection.url": "jdbc:postgresql://postgres/new_db",
+    "connection.username": "local",
+    "connection.password": "local",
+    "topics" : "mysql.old_db.MEMBER",
+    "auto.create": "true",
+    "insert.mode": "upsert",
+    "delete.enabled": "true",
+    "primary.key.mode": "record_key",
+    "schema.evolution": "basic",
+    "transforms": "unwrap",
+    "transforms.unwrap.type": "io.debezium.transforms.ExtractNewRecordState",
+    "table.name.format": "MEMBER"
+  }
 }'
 ```
